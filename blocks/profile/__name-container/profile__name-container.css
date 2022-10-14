@@ -1,0 +1,14 @@
+.profile__name-container {
+  display: flex;
+  align-items: center;
+  padding-left: 30px;
+
+}
+
+@media screen and (max-width: 660px) {
+  .profile__name-container {
+    justify-content: center;
+    padding-top: 28px;
+
+  }
+}
