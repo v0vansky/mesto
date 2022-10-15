@@ -1,15 +1,19 @@
 .popup__container {
+  margin: 0;
+  padding: 0;
   display: flex;
-  max-height: 259px;
-  height: 100%;
   flex-direction: column;
   justify-content: space-between;
-  padding: 34px 36px 37px;
+  margin-top: 47px;
+  padding-left: 36px;
+  padding-right: 36px;
 }
 
 
 @media screen and (max-width: 425px) {
-  .popup__form {
-    padding: 25px 22px;
+  .popup__container {
+    padding-left: 22px;
+    padding-right: 22px;
+    margin-top: 75px;
   }
 }
