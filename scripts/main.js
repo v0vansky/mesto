@@ -8,19 +8,28 @@ const formElement = overlayEl.querySelector('.popup__container');
 let nameInput = formElement.querySelector('.popup__input-name');
 let aboutInput = formElement.querySelector('.popup__input-about');
 
+nameInput.value = profileName.textContent;
+aboutInput.value = profileAbout.textContent;
+
 const toggleOverlay = () => {
   overlayEl.classList.toggle('overlay_opened');
+}
+
+const resetInput = () => {
+  nameInput.value = profileName.textContent;
+  aboutInput.value = profileAbout.textContent;
 }
 
 function formSubmitHandler (evt) {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileAbout.textContent = aboutInput.value;
-  formElement.addEventListener('submit', toggleOverlay);
+  toggleOverlay();
 }
 
 openProfileEditButton.addEventListener('click', toggleOverlay);
 
-closePopupButton.addEventListener('click', toggleOverlay);
-
 formElement.addEventListener('submit', formSubmitHandler);
+
+closePopupButton.addEventListener('click', toggleOverlay);
+closePopupButton.addEventListener('click', resetInput);
