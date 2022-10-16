@@ -5,14 +5,12 @@ const profileInfo = document.querySelector('.profile__info');
 let profileName = profileInfo.querySelector('.profile__name');
 let profileAbout = profileInfo.querySelector('.profile__about');
 const formElement = overlayEl.querySelector('.popup__container');
-let nameInput = formElement.querySelector('.popup__input-name');
-let aboutInput = formElement.querySelector('.popup__input-about');
-
-nameInput.value = profileName.textContent;
-aboutInput.value = profileAbout.textContent;
+let nameInput = formElement.querySelector('.popup__input_type_name');
+let aboutInput = formElement.querySelector('.popup__input_type_about');
 
 const toggleOverlay = () => {
   overlayEl.classList.toggle('overlay_opened');
+  resetInput();
 }
 
 const resetInput = () => {
@@ -27,9 +25,10 @@ function formSubmitHandler (evt) {
   toggleOverlay();
 }
 
+resetInput();
+
 openProfileEditButton.addEventListener('click', toggleOverlay);
 
 formElement.addEventListener('submit', formSubmitHandler);
 
 closePopupButton.addEventListener('click', toggleOverlay);
-closePopupButton.addEventListener('click', resetInput);
