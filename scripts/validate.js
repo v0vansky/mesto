@@ -29,47 +29,31 @@ const checkInputValidity = (formElement, inputElement, settings) => {
   }
 };
 
-function handleProfileSubmit (evt) {
-  evt.preventDefault();
-  profileName.textContent = nameInput.value;
-  profileAbout.textContent = aboutInput.value;
-  closePopup(popupEditProfile);
-}
-
-function handleCardSubmit (evt) {
-  evt.preventDefault();
-  renderCard(placeInput.value, linkInput.value);
-  evt.target.reset();
-  closePopup(popupAddPlace);
-}
-
 const hasInvalidInput = (inputList) => {
   return inputList.some((inputElement) => {
     return !inputElement.validity.valid;
   })
 };
 
-const toggleButtonState = (inputList, buttonElement) => {
+const toggleButtonState = (inputList, buttonElement, settings) => {
   if (hasInvalidInput(inputList)) {
     buttonElement.classList.add(settings.inactiveButtonClass);
+    buttonElement.setAttribute("disabled", "disabled");
   } else {
     buttonElement.classList.remove(settings.inactiveButtonClass);
+    buttonElement.removeAttribute("disabled", "disabled");
   }
 };
 
 const setEventListeners = (formElement, settings) => {
   const inputList = Array.from(formElement.querySelectorAll(settings.inputSelector));
   const buttonElement = formElement.querySelector(settings.submitButtonSelector);
-  toggleButtonState(inputList, buttonElement);
-
-  formElement.addEventListener("submit", (evt) => {
-    evt.preventDefault();
-  });
+  toggleButtonState(inputList, buttonElement, settings);
 
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', function () {
       checkInputValidity(formElement, inputElement, settings);
-      toggleButtonState(inputList, buttonElement);
+      toggleButtonState(inputList, buttonElement, settings);
     });
   });
 };

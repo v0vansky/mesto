@@ -37,7 +37,7 @@
   <div class="popup popup_type_edit-profile">
     <div class="popup__container">
       <h2 class="popup__title">Редактировать профиль</h2>
-      <form name="inputFormProfile" class="popup__form">
+      <form name="inputFormProfile" class="popup__form" novalidate>
         <div class="popup__input-container">
           <input type="text" id="name-input" name="inputName" class="popup__input popup__input_type_name" placeholder="Имя" minlength="2" maxlength="40" required novalidate>
           <span class="popup__error name-input-error"></span>
@@ -46,7 +46,7 @@
           <input type="text" id="about-input" name="inputAbout" class="popup__input popup__input_type_about" placeholder="О себе" minlength="2" maxlength="200" required novalidate>
           <span class="popup__error about-input-error"></span>
         </div>
-        <button type="submit" class="popup__save-button">Сохранить</button>
+        <button type="submit" class="popup__save-button" novalidate>Сохранить</button>
       </form>
       <button type="button" class="popup__close-button"></button>
     </div>
@@ -55,7 +55,7 @@
   <div class="popup popup_type_add-place">
     <div class="popup__container">
       <h2 class="popup__title">Новое место</h2>
-      <form name="inputFormPlace" class="popup__form">
+      <form name="inputFormPlace" class="popup__form" novalidate>
         <div class="popup__input-container">
           <input type="text" id="place-input" name="inputPlace" class="popup__input popup__input_type_place" placeholder="Название" minlength="2" maxlength="40" required novalidate>
           <span class="popup__error place-input-error"></span>
@@ -64,7 +64,7 @@
           <input type="url" id="url-input" name="inputUrl" class="popup__input popup__input_type_link" placeholder="Ссылка на картинку" required novalidate>
           <span class="popup__error url-input-error"></span>
         </div>
-        <button type="submit" class="popup__save-button">Создать</button>
+        <button type="submit" class="popup__save-button" novalidate>Создать</button>
       </form>
       <button type="button" class="popup__close-button"></button>
     </div>
