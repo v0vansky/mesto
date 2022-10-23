@@ -113,6 +113,19 @@ function removeCard (evt) {
   element.remove();
 }
 
+const closeByEsc = (event) => {
+  if (event.key === "Escape") {
+    const popupOpened = document.querySelector(".popup_opened");
+    closePopup(popupOpened);
+  }
+};
+
+const closeByOverlay = (evt) => {
+  if (evt.target.classList.contains("popup_opened")) {
+    closePopup(evt.target);
+  }
+};
+
 
 
 popupForms.forEach((form) => {
@@ -140,3 +153,8 @@ openAddPlaceButton.addEventListener('click', ()=>{
   openPopup(popupAddPlace);
   resetInputPlace();
 });
+
+document.addEventListener("keydown", closeByEsc);
+popupEditProfile.addEventListener("click", closeByOverlay);
+popupAddPlace.addEventListener("click", closeByOverlay);
+popupZoom.addEventListener("click", closeByOverlay);
