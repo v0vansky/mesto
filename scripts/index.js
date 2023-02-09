@@ -1,3 +1,6 @@
+import { Card } from './Card.js';
+import { FormValidator } from './FormValidator.js';
+
 const buttonProfileEdit = document.querySelector('.profile__edit-button');
 const buttonAddPlace = document.querySelector('.profile__add-button');
 
@@ -70,51 +73,28 @@ function handleProfileSubmit (evt) {
 
 function handleCardSubmit (evt) {
   evt.preventDefault();
-  renderCard(placeInput.value, linkInput.value);
-  evt.submitter.classList.add('popup__save-button_disabled');
-  evt.submitter.setAttribute('disabled', true);
+  renderCard({name: placeInput.value, link: linkInput.value});
   closePopup(popupAddPlace);
 }
-
 
 const fillInputProfile = () => {
   nameInput.value = profileName.textContent;
   aboutInput.value = profileAbout.textContent;
 }
 
-function openImagePopup(name, link) {
+function openImagePopup(data) {
   openPopup(popupZoom);
-  popupImage.src = link;
-  popupImage.alt = name;
-  popupImageName.textContent = name;
+  popupImage.src = data.link;
+  popupImage.alt = data.name;
+  popupImageName.textContent = data.name;
 }
 
-function createCard (name, link) {
-  const newElement = placeTemplate.content.cloneNode(true);
-  const elementImage = newElement.querySelector('.element__image');
-  const elementText = newElement.querySelector('.element__text');
+function renderCard (item) {
+  const card = new Card(item, '#place-template');
+  const cardElement = card.generateCard();
 
-  newElement.querySelector('.element__like-button').addEventListener('click', (evt) => {
-    evt.target.classList.toggle('element__like-button_active');
-  });
-  newElement.querySelector('.element__remove-button').addEventListener('click', removeCard);
-  elementImage.addEventListener('click', () => openImagePopup(name, link));
-
-  elementImage.src = link;
-  elementText.textContent = name;
-  elementImage.alt = name;
-  return newElement;
-}
-
-function renderCard (name, link) {
-  const newCard = createCard(name, link);
-  placesGrid.prepend(newCard);
-}
-
-function removeCard (evt) {
-  const element = evt.target.closest('.element');
-  element.remove();
-}
+  placesGrid.prepend(cardElement);
+};
 
 const closeByEsc = (event) => {
   if (event.key === "Escape") {
@@ -134,10 +114,6 @@ closeButtons.forEach((button) => {
   button.addEventListener('click', () => closePopup(popup));
 });
 
-initialCards.forEach((item) => {
-  renderCard(item.name, item.link);
-});
-
 buttonProfileEdit.addEventListener('click', ()=>{
   openPopup(popupEditProfile);
   fillInputProfile();
@@ -145,11 +121,35 @@ buttonProfileEdit.addEventListener('click', ()=>{
 buttonAddPlace.addEventListener('click', ()=>{
   openPopup(popupAddPlace);
   popupForms.inputFormPlace.reset();
+  buttonPlaceSubmit.classList.add('popup__save-button_disabled');
+  buttonPlaceSubmit.setAttribute('disabled', true);
 });
 
+initialCards.forEach((item) => {
+  renderCard(item);
+});
 
 popupEditProfile.addEventListener('submit', handleProfileSubmit);
 popupAddPlace.addEventListener('submit', handleCardSubmit);
 popupEditProfile.addEventListener("click", closeByOverlay);
 popupAddPlace.addEventListener("click", closeByOverlay);
 popupZoom.addEventListener("click", closeByOverlay);
+
+
+const settings = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__save-button',
+  inactiveButtonClass: 'popup__save-button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+};
+
+const formList = Array.from(document.querySelectorAll(settings.formSelector));
+formList.forEach((formElement) => {
+  const validator = new FormValidator(settings, formElement);
+  validator.enableValidation();
+});
+
+
+export {openImagePopup};
