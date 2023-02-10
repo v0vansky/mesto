@@ -89,12 +89,15 @@ function openImagePopup(data) {
   popupImageName.textContent = data.name;
 }
 
-function renderCard (item) {
+function createCard(item) {
   const card = new Card(item, '#place-template');
-  const cardElement = card.generateCard();
+  return card.generateCard();
+}
 
+function renderCard (item) {
+  const cardElement = createCard(item);
   placesGrid.prepend(cardElement);
-};
+}
 
 const closeByEsc = (event) => {
   if (event.key === "Escape") {
@@ -121,8 +124,7 @@ buttonProfileEdit.addEventListener('click', ()=>{
 buttonAddPlace.addEventListener('click', ()=>{
   openPopup(popupAddPlace);
   popupForms.inputFormPlace.reset();
-  buttonPlaceSubmit.classList.add('popup__save-button_disabled');
-  buttonPlaceSubmit.setAttribute('disabled', true);
+
 });
 
 initialCards.forEach((item) => {
@@ -145,11 +147,12 @@ const settings = {
   errorClass: 'popup__error_visible'
 };
 
-const formList = Array.from(document.querySelectorAll(settings.formSelector));
-formList.forEach((formElement) => {
-  const validator = new FormValidator(settings, formElement);
-  validator.enableValidation();
-});
+const formAddPlace = new FormValidator(settings, document.querySelector('.popup__form_type_add-place'));
+const formEditProfile = new FormValidator(settings, document.querySelector('.popup__form_type_edit-profile'));
+
+formEditProfile.enableValidation();
+formAddPlace.enableValidation();
+formAddPlace.toggleButtonState();
 
 
 export {openImagePopup};

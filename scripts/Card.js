@@ -17,12 +17,12 @@ export class Card {
   }
 
   _setValues() {
-    const elementImage = this._element.querySelector('.element__image');
-    const elementText = this._element.querySelector('.element__text');
+    this._elementImage = this._element.querySelector('.element__image');
+    this._elementText = this._element.querySelector('.element__text');
 
-    elementImage.src = this._link;
-    elementText.textContent = this._name;
-    elementImage.alt = this._name;
+    this._elementImage.src = this._link;
+    this._elementText.textContent = this._name;
+    this._elementImage.alt = this._name;
   }
 
   _likeCard() {
@@ -38,7 +38,7 @@ export class Card {
   _setEventListeners() {
     this._element.querySelector('.element__like-button').addEventListener('click', () => this._likeCard());
     this._element.querySelector('.element__remove-button').addEventListener('click', () => this._removeCard());
-    this._element.querySelector('.element__image').addEventListener('click', () => openImagePopup({name: this._name, link: this._link}));
+    this._elementImage.addEventListener('click', () => openImagePopup({name: this._name, link: this._link}));
   }
 
   generateCard() {
