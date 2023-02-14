@@ -124,7 +124,7 @@ buttonProfileEdit.addEventListener('click', ()=>{
 buttonAddPlace.addEventListener('click', ()=>{
   openPopup(popupAddPlace);
   popupForms.inputFormPlace.reset();
-
+  formAddPlace.toggleButtonState();
 });
 
 initialCards.forEach((item) => {
@@ -152,7 +152,6 @@ const formEditProfile = new FormValidator(settings, document.querySelector('.pop
 
 formEditProfile.enableValidation();
 formAddPlace.enableValidation();
-formAddPlace.toggleButtonState();
 
 
 export {openImagePopup};
