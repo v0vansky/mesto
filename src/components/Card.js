@@ -8,16 +8,16 @@ export class Card {
 
   _getTemplate() {
     const cardElement = document
-    .querySelector(this._templateSelector)
-    .content.querySelector('.element')
-    .cloneNode(true);
+      .querySelector(this._templateSelector)
+      .content.querySelector(".element")
+      .cloneNode(true);
 
     return cardElement;
   }
 
   _setValues() {
-    this._elementImage = this._element.querySelector('.element__image');
-    this._elementText = this._element.querySelector('.element__text');
+    this._elementImage = this._element.querySelector(".element__image");
+    this._elementText = this._element.querySelector(".element__text");
 
     this._elementImage.src = this._link;
     this._elementText.textContent = this._name;
@@ -25,19 +25,23 @@ export class Card {
   }
 
   _likeCard() {
-    const likeButton = this._element.querySelector('.element__like-button');
-    likeButton.classList.toggle('element__like-button_active');
+    this._likeButton.classList.toggle("element__like-button_active");
   }
 
   _removeCard() {
-        this._element.remove();
-        this._element = null;
+    this._element.remove();
+    this._element = null;
   }
 
   _setEventListeners() {
-    this._element.querySelector('.element__like-button').addEventListener('click', () => this._likeCard());
-    this._element.querySelector('.element__remove-button').addEventListener('click', () => this._removeCard());
-    this._elementImage.addEventListener('click', () => this._handleCardClick({name: this._name, src: this._link}));
+    this._likeButton = this._element.querySelector(".element__like-button");
+    this._likeButton.addEventListener("click", () => this._likeCard());
+    this._element
+      .querySelector(".element__remove-button")
+      .addEventListener("click", () => this._removeCard());
+    this._elementImage.addEventListener("click", () =>
+      this._handleCardClick({ name: this._name, src: this._link })
+    );
   }
 
   generateCard() {
@@ -47,4 +51,4 @@ export class Card {
 
     return this._element;
   }
-};
+}
