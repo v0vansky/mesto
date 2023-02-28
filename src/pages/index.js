@@ -51,10 +51,11 @@ function handleCardSubmit() {
 }
 
 buttonProfileEdit.addEventListener("click", () => {
+  let currentInfo = userInfo.getUserInfo();
   formEditProfile.resetValidation();
   popupProfile.open();
-  nameInput.value = userInfo.getUserInfo().name;
-  aboutInput.value = userInfo.getUserInfo().about;
+  nameInput.value = currentInfo.name;
+  aboutInput.value = currentInfo.about;
 });
 buttonAddPlace.addEventListener("click", () => {
   popupPlace.open();
