@@ -6,7 +6,7 @@
   object-fit: cover;
   background-color: transparent;
   transition: .3s;
-
+  margin-top: -12px;
 }
 
 .element__like-button:hover {

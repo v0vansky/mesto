@@ -21,7 +21,6 @@ module.exports = {
     compress: true,
     port: 8080,
     open: true,
-    watchFiles: ['src/**/*.html']
   },
   module: {
     rules: [
@@ -50,6 +49,7 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin()
+
   ],
   stats: {
     children: true

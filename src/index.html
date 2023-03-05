@@ -4,9 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Место</title>
-    <meta name="description" content="Восьмая практическая работа на Яндекс Практикуме">
-    <meta name="keywords" content="html, css, javascript">
-    <meta name="author" content="Владимир Стенин">
 </head>
 <body class="body">
   <div class="page">
@@ -15,7 +12,8 @@
     </header>
     <main>
       <section class="profile">
-        <img src="<%=require('././images/VS_avatar.jpg')%>" alt="картинка профиля" class="profile__image">
+        <img src="#" alt="картинка профиля" class="profile__image">
+        <div class="profile__image-edit"></div>
         <div class="profile__info">
           <div class="profile__name-container">
             <h1 class="profile__name">Владимир Стенин</h1>
@@ -31,6 +29,30 @@
     <footer class="footer">
       <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
     </footer>
+  </div>
+
+  <div class="popup popup_type_confirm">
+    <div class="popup__container">
+      <h2 class="popup__title">Вы уверены?</h2>
+      <div class="popup__confirm-container">
+        <button type="submit" class="popup__save-button">Да</button>
+      </div>
+      <button type="button" class="popup__close-button"></button>
+    </div>
+  </div>
+
+  <div class="popup popup_type_avatar">
+    <div class="popup__container">
+      <h2 class="popup__title">Обновить аватар</h2>
+      <form name="inputFormAvatar" class="popup__form popup__form_type_avatar" novalidate>
+        <div class="popup__input-container">
+          <input type="url" id="avatar-input" name="inputAvatar" class="popup__input popup__input_type_avatar" placeholder="Ссылка на картинку" required>
+          <span class="popup__error avatar-input-error"></span>
+        </div>
+        <button type="submit" class="popup__save-button">Сохранить</button>
+      </form>
+      <button type="button" class="popup__close-button"></button>
+    </div>
   </div>
 
   <div class="popup popup_type_edit-profile">
@@ -82,7 +104,9 @@
       <img src="#" class="element__image" alt="#">
       <div class="element__info">
         <h3 class="element__text"></h3>
-        <button type="button" class="element__like-button"></button>
+        <button type="button" class="element__like-button">
+          <div class="element__like-counter">0</div>
+        </button>
       </div>
       <button type="button" class="element__remove-button"></button>
     </div>

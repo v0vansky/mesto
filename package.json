@@ -6,19 +6,25 @@
   "scripts": {
     "dev": "webpack serve",
     "build": "webpack --mode production",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/v0vansky/mesto.git"
   },
-  "keywords": ["html", "css", "javascript"],
+  "keywords": [
+    "html",
+    "css",
+    "javascript"
+  ],
   "author": "Владимир Стенин",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/v0vansky/mesto/issues"
   },
-  "homepage": "https://github.com/v0vansky/mesto#readme",
+  "homepage": "https://v0vansky.github.io/mesto",
   "devDependencies": {
     "@babel/core": "^7.21.0",
     "@babel/preset-env": "^7.20.2",
@@ -27,6 +33,7 @@
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.7.3",
     "cssnano": "^5.1.15",
+    "gh-pages": "^5.0.0",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.7.2",
     "postcss-loader": "^7.0.2",
