@@ -9,17 +9,16 @@ export class UserInfo {
       const userInfo = {
           name: this._name.textContent,
           about: this._about.textContent,
+          avatar: this._avatar.src,
+          _id: this._id
       }
       return userInfo
   }
 
-  setUserInfo(data) {
-      if (data.name) this._name.textContent = data.name;
-      if (data.about) this._about.textContent = data.about;
-      if (data.avatar) this._avatar.src = data.avatar;
-  }
-
-  setUserAvatar(avatar) {
-    this._avatar.src = avatar;
+  setUserInfo( { name, about, avatar, _id } ) {
+      if (name) this._name.textContent = name;
+      if (about) this._about.textContent = about;
+      if (avatar) this._avatar.src = avatar;
+      if (_id) this._id = _id;
   }
 }

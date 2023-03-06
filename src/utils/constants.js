@@ -1,15 +1,7 @@
 export const buttonProfileEdit = document.querySelector(".profile__edit-button");
 export const buttonAddPlace = document.querySelector(".profile__add-button");
 export const buttonAvatarEdit = document.querySelector(".profile__image-edit");
-const popupEditProfile = document.querySelector(".popup_type_edit-profile");
-const popupAddPlace = document.querySelector(".popup_type_add-place");
-const popupAvatar = document.querySelector(".popup_type_avatar");
 export const placesGrid = document.querySelector(".elements");
-export const nameInput = popupEditProfile.querySelector(".popup__input_type_name");
-export const aboutInput = popupEditProfile.querySelector(".popup__input_type_about");
-export const placeInput = popupAddPlace.querySelector(".popup__input_type_place");
-export const linkInput = popupAddPlace.querySelector(".popup__input_type_link");
-export const avatarInput = popupAvatar.querySelector(".popup__input_type_avatar");
 
 export const settings = {
   formSelector: '.popup__form',

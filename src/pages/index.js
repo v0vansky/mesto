@@ -12,31 +12,42 @@ import {
   buttonAddPlace,
   buttonAvatarEdit,
   placesGrid,
-  nameInput,
-  aboutInput,
-  placeInput,
-  linkInput,
-  avatarInput,
   settings,
   authData,
 } from "../utils/constants.js";
 
-const api = new Api(authData);
-let cardsList;
-const initialCards = api.getInitialCards()
-.then(function (data) {
-  cardsList = new Section(
-    {
-      items: data.reverse(),
-      renderer: (item) => {
-        const cardElement = createCard(item);
-        cardsList.addItem(cardElement);
-      },
+
+const cardsList = new Section(
+  {
+    renderer: (item) => {
+      const cardElement = createCard(item);
+      cardsList.addItem(cardElement);
     },
-    placesGrid
-  );
+  },
+  placesGrid
+)
+
+const userInfo = new UserInfo({
+  profileNameSelector: ".profile__name",
+  profileAboutSelector: ".profile__about",
+  profileAvatarSelector: ".profile__image",
 })
-.catch((err) => console.log(err));
+let userId;
+
+const api = new Api(authData);
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([userData, initialCards]) => {
+    userInfo.setUserInfo({
+      name: userData.name,
+      about: userData.about,
+      avatar: userData.avatar,
+      _id: userData._id,
+    });
+    userId = userInfo.getUserInfo()._id;
+    cardsList.renderItems(initialCards.reverse());
+  })
+  .catch((err) => console.log(err));
+
 
 function createCard(item) {
   const card = new Card(
@@ -78,20 +89,21 @@ function handleCardDelete(item) {
   });
 }
 
-function handleProfileSubmit() {
-  api.patchUserInfo({ name: nameInput.value, about: aboutInput.value })
+
+function handleProfileSubmit({ inputName, inputAbout }) {
+  api.patchUserInfo({ name: inputName, about: inputAbout })
   .then(() => {
-    userInfo.setUserInfo({ name: nameInput.value, about: aboutInput.value })
+    userInfo.setUserInfo({ name: inputName, about: inputAbout })
   })
   .then(() => popupProfile.close())
   .catch((err) => console.log(err))
   .finally(() => {
-    popupProfile.submitButton.textContent = "Сохранить";
+    popupProfile.renderLoading(false);
   });
 }
 
-function handleCardSubmit() {
-  api.postCard({ name: placeInput.value, link: linkInput.value })
+function handleCardSubmit({ inputPlace, inputUrl }) {
+  api.postCard({ name: inputPlace, link: inputUrl })
   .then((data) => {
     cardsList.addItem(
       createCard({
@@ -106,71 +118,52 @@ function handleCardSubmit() {
   .then(() => popupPlace.close())
   .catch((err) => console.log(err))
   .finally(() => {
-    popupPlace.submitButton.textContent = "Создать";
+    popupPlace.renderLoading(false);
   });
 }
 
-function handleAvatarSubmit() {
-  api.patchAvatar({ avatar: avatarInput.value })
-  .then((data) => {
-    userInfo.setUserAvatar(data.avatar);
+function handleAvatarSubmit({ inputAvatar }) {
+  api.patchAvatar({ avatar: inputAvatar })
+  .then(() => {
+    userInfo.setUserInfo({ avatar: inputAvatar });
   })
   .then(() => popupAvatar.close())
   .catch((err) => console.log(err))
   .finally(() => {
-    popupAvatar.submitButton.textContent = "Сохранить";
+    popupAvatar.renderLoading(false);
   });
 }
 
 buttonAvatarEdit.addEventListener("click", () => {
   popupAvatar.open();
-  formAvatar.resetValidation();
+  formAvatarValidator.resetValidation();
 })
 buttonProfileEdit.addEventListener("click", () => {
-  let currentInfo = userInfo.getUserInfo();
-  formEditProfile.resetValidation();
+  const currentInfo = userInfo.getUserInfo();
+  formEditProfileValidator.resetValidation();
   popupProfile.open();
-  nameInput.value = currentInfo.name;
-  aboutInput.value = currentInfo.about;
+  popupProfile.setInputValues({ inputName: currentInfo.name, inputAbout: currentInfo.about });
 });
 buttonAddPlace.addEventListener("click", () => {
   popupPlace.open();
-  formAddPlace.resetValidation();
+  formAddPlaceValidator.resetValidation();
 });
 
-const userInfo = new UserInfo({
-  profileNameSelector: ".profile__name",
-  profileAboutSelector: ".profile__about",
-  profileAvatarSelector: ".profile__image",
-});
-
-let userId;
-const profileInfo = api.getUserInfo()
-  .then((data) => {
-    userId = data._id;
-    userInfo.setUserInfo({
-      name: data.name,
-      about: data.about,
-    });
-    userInfo.setUserAvatar(data.avatar);
-  })
-  .catch((err) => console.log(err));
-
-const formAvatar = new FormValidator(
+const formAvatarValidator = new FormValidator(
   settings,
   document.querySelector(".popup__form_type_avatar")
 );
-const formAddPlace = new FormValidator(
+const formAddPlaceValidator = new FormValidator(
   settings,
   document.querySelector(".popup__form_type_add-place")
 );
-const formEditProfile = new FormValidator(
+const formEditProfileValidator = new FormValidator(
   settings,
   document.querySelector(".popup__form_type_edit-profile")
 );
-formAvatar.enableValidation();
-formEditProfile.enableValidation();
-formAddPlace.enableValidation();
+formAvatarValidator.enableValidation();
+formEditProfileValidator.enableValidation();
+formAddPlaceValidator.enableValidation();
 
 const popupImage = new PopupWithImage(".popup_type_image-zoom");
 const popupProfile = new PopupWithForm(".popup_type_edit-profile", handleProfileSubmit);
@@ -182,5 +175,3 @@ popupProfile.setEventListeners();
 popupPlace.setEventListeners();
 popupAvatar.setEventListeners();
 popupConfirmation.setEventListeners();
-
-Promise.all([profileInfo, initialCards]).then(() => cardsList.renderItems());

@@ -9,10 +9,10 @@ export class Api {
       method: "GET",
       headers: this._headers,
     })
-    .then((res) => this._checkError(res));
+    .then((res) => this._checkResponse(res));
   }
 
-  _checkError(res) {
+  _checkResponse(res) {
     if (res.ok) {
       return res.json();
     }
@@ -25,7 +25,7 @@ export class Api {
       headers: this._headers,
       body: JSON.stringify(data),
     })
-    .then((res) => this._checkError(res));
+    .then((res) => this._checkResponse(res));
   }
 
   deleteCard(cardId) {
@@ -33,7 +33,7 @@ export class Api {
       method: "DELETE",
       headers: this._headers,
     })
-    .then((res) => this._checkError(res));
+    .then((res) => this._checkResponse(res));
   }
 
   putLike(cardId) {
@@ -41,7 +41,7 @@ export class Api {
       method: "PUT",
       headers: this._headers,
     })
-    .then((res) => this._checkError(res));
+    .then((res) => this._checkResponse(res));
   }
 
   deleteLike(cardId) {
@@ -49,7 +49,7 @@ export class Api {
       method: "DELETE",
       headers: this._headers,
     })
-    .then((res) => this._checkError(res));
+    .then((res) => this._checkResponse(res));
   }
 
   getUserInfo() {
@@ -57,7 +57,7 @@ export class Api {
       method: "GET",
       headers: this._headers,
     })
-    .then((res) => this._checkError(res));
+    .then((res) => this._checkResponse(res));
   }
 
   patchUserInfo(data) {
@@ -66,7 +66,7 @@ export class Api {
       headers: this._headers,
       body: JSON.stringify(data),
     })
-    .then((res) => this._checkError(res));
+    .then((res) => this._checkResponse(res));
   }
 
   patchAvatar(data) {
@@ -75,6 +75,6 @@ export class Api {
       headers: this._headers,
       body: JSON.stringify(data),
     })
-    .then((res) => this._checkError(res));
+    .then((res) => this._checkResponse(res));
   }
 }
